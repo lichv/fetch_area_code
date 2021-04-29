@@ -46,6 +46,8 @@ def handle(db,filepath):
 		info = db.getOne('zone',{'code':item['code'],'name':item['label']})
 		if not info:
 			db.add('zone',{'code':item['code'],'name':item['label'],'type':item['type']})
+		else:
+			db.modify('zone',{'code':item['code']},{'name':item['label'],'type':item['type']})
 
 
 db = PostgresqlDBService.instance(host='localhost', port=5432, user='postgres', passwd='123456', db='data')
@@ -57,5 +59,4 @@ if os.path.isdir(sources):
 				filepath = os.path.join(parent,filename)
 				print(filepath)
 				handle(db,filepath)
-
 print('ok')
